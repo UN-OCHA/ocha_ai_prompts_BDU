@@ -3,8 +3,8 @@
 Copy-paste prompts that make any AI assistant (Copilot, ChatGPT, Gemini, Claude…) work to OCHA’s
 brand and house style. One prompt per job: documents and slides; posters, flyers and reports;
 charts, infographics and maps; social media; video; writing. Colleagues copy them from the brand
-site, “Working with AI”:
-https://brand.unocha.org/document/281801#/overview/visual-identity/working-with-ai-visual-identity-prompt
+site, in the Visual Identity page’s “Working with AI” section:
+https://brand.unocha.org/document/281801#/overview/visual-identity
 
 ## How it is built
 
