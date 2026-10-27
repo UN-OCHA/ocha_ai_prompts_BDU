@@ -1,0 +1,49 @@
+{
+  "prompt_block_source": 12104193,
+  "targets": {
+    "test": {
+      "page_id": 4243581,
+      "section_id": 5913398,
+      "heading_id": 4061086,
+      "intro_block": 12147864,
+      "jobs": {
+        "documents-and-slides": {
+          "text_block": 12147865,
+          "prompt_block": 12147866
+        },
+        "posters-flyers-reports": {
+          "divider_block": 12147867,
+          "text_block": 12147868,
+          "prompt_block": 12147869
+        },
+        "charts-infographics-maps": {
+          "divider_block": 12147870,
+          "text_block": 12147871,
+          "prompt_block": 12147872
+        },
+        "social-media": {
+          "divider_block": 12147873,
+          "text_block": 12147874,
+          "prompt_block": 12147875
+        },
+        "video": {
+          "divider_block": 12147876,
+          "text_block": 12147877,
+          "prompt_block": 12147878
+        },
+        "writing": {
+          "divider_block": 12147879,
+          "text_block": 12147880,
+          "prompt_block": 12147881
+        }
+      }
+    },
+    "live": {
+      "page_id": 3407315,
+      "section_id": 5901191,
+      "heading_id": 4050852,
+      "intro_block": 12104166,
+      "jobs": {}
+    }
+  }
+}

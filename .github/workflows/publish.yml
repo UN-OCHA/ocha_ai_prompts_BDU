@@ -1,0 +1,43 @@
+# Checks the prompts on every push and pull request. On main, also publishes them to the brand site.
+name: Build and publish prompts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # Fails when a prompt is too long, links outside the public allowlist, or has straight quotes.
+      - name: Build and check
+        run: python3 scripts/build.py
+      # dist/ is committed so the finished prompts can be read on GitHub; it must match the parts.
+      - name: dist/ is up to date
+        run: git diff --exit-code -- dist/ || (echo "::error::Run python3 scripts/build.py and commit dist/" && exit 1)
+
+  publish:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    env:
+      FRONTIFY_TOKEN: ${{ secrets.FRONTIFY_TOKEN }}
+      # Which page in frontify.json to update. Set the repository variable FRONTIFY_TARGET to change it.
+      TARGET: ${{ vars.FRONTIFY_TARGET || 'live' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: No token yet
+        if: env.FRONTIFY_TOKEN == ''
+        run: echo "::warning::The FRONTIFY_TOKEN secret is not set, so the brand site was not updated."
+      - name: Publish to the brand site
+        if: env.FRONTIFY_TOKEN != ''
+        run: python3 scripts/publish_frontify.py --target "$TARGET"

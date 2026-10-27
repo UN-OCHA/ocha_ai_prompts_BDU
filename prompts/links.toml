@@ -1,0 +1,28 @@
+# Every link the prompts use, in one place. Prompts write {{link:name}}; the build fills in the URL.
+#
+# Brand site pages use Frontify's permanent links (/r/…): they keep working when a page is renamed
+# or moved to another category, which the readable #/category/page links don't. To get one, open
+# the page in the brand site editor and copy its permanent link, or read `permanent_link` from
+# the Frontify API (GET /api/document-page/<page id>). The page each link opens is noted on its line.
+
+# Brand site (brand.unocha.org)
+brand = "https://brand.unocha.org"
+logo = "https://brand.unocha.org/r/d1pmD0WMBpBlzZdio-vKS1O-W-wM0vBRQ08U_54cV8Q"                   # Visual Identity > OCHA Logo
+icons = "https://brand.unocha.org/r/ckOjqyeE7UQaqnNcXganiPfPOV2tSYEN5dN-1_XlpEs"                  # Icons > Humanitarian icons
+photo_guidance = "https://brand.unocha.org/r/PaP_Lqwjttl4STuT6XzsQYZcrfKH4Jm1BAdgy-eARyY"         # Visual Identity > Photography > Photo guidance
+diversity_guide = "https://brand.unocha.org/r/N3N9b_cAFxSMLoBtPWsvpTVo-71p-oB1n5TN-m-CfY4"        # Visual Identity > Photography > Diversity and inclusivity guide
+templates = "https://brand.unocha.org/r/VLE9cKS8VkGPe_kYiOfwA7-oSHs6q-S4yaHQoHGxiuA"              # Visual Identity > Templates > OCHA templates
+powerpoint_templates = "https://brand.unocha.org/r/ixU6a43yh9P3RNAkbTOtuBHGwtFjbL41-vHdOAbLo_0"   # Corporate resources > OCHA presentation templates
+word_template = "https://brand.unocha.org/r/TEo371AD1rK_TZNj1-3XK2Yy28hYQaf7osa9YBpm4M0"          # Corporate resources > OCHA Word template
+dataviz_tool_page = "https://brand.unocha.org/r/XO5IL9LLWpBHuWl9q1xaAElSTi_KYwrmBiLGZZUrxXI"      # Reporting > Humanitarian Dataviz Tool
+numbers = "https://brand.unocha.org/r/MwbyPdwQ3Dp_BszHuQFHNRl01ysAiK3nwQKREvhXjI4"                # Reporting > Numbers in graphics
+location_maps = "https://brand.unocha.org/r/ir-TZEHR75-MNVmhmo_s8iJIRK4sGH0mbGNplxpEejM"          # Maps > Templates > Location maps
+map_disclaimers = "https://brand.unocha.org/r/t_UjjjG_56uiKd9MpsyGwsEDCN2QZsb2z_ABBjk8GzE"        # Maps > Guidance > Map Disclaimers
+territories = "https://brand.unocha.org/r/c81OtjPARNKy9IVSGXi_MLkIgJxSyG63TaZyCj3fM8A"            # Maps > Guidance > Representing Territories
+social_templates = "https://brand.unocha.org/r/HEyCOJbd9G9XGE8pP6Sy1CmWJ-1sh-tJdxEHGpi0gz8"       # Social media & Campaigns > Social media > Templates
+
+# OCHA tools and libraries
+mediavalet = "https://unocha.mediavalet.com"
+icon_list = "https://raw.githubusercontent.com/UN-OCHA/humanitarian-icons-2026-BDU/main/metadata.json"
+dataviz_web = "https://un-ocha.github.io/dataviz_web_BDU/"
+quickvid = "https://un-ocha.github.io/quickvid_BDU/"

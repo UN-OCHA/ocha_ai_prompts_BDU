@@ -1,0 +1,18 @@
+# The words around the prompts on the brand site: the section heading, the introduction, and what
+# every copy button says. Each job's own title, summary and examples live in its file in jobs/.
+# The introduction is a list of paragraphs; text between ** and ** is set in bold.
+
+heading = "Working with AI"
+
+intro = [
+  "Copy the prompt for what you’re making, paste it into your AI assistant, then ask for what you need. The assistant then follows OCHA’s brand and house style, whether you’re starting fresh, halfway through, or fixing something already made.",
+  "**OCHA staff:** use Microsoft 365 Copilot, OCHA’s official AI tool. Paste the prompt at the start of a new chat, in Copilot Chat or in the Copilot pane in Word or PowerPoint. Share only information you’re allowed to share in the tool you use.",
+  "Questions or suggestions: ochavisual@un.org",
+]
+
+# Shown on each job's button, then after a successful copy. {title} is the job title in lower case.
+button_label = "Copy the {title} prompt"
+confirmation = "Copied. Paste it into your AI assistant."
+
+# Shown under each job's summary, followed by its first two example requests.
+examples_label = "Try:"
