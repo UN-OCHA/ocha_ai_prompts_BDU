@@ -2,7 +2,8 @@
 # every copy button says. Each job's own title, summary and examples live in its file in jobs/.
 # The introduction is a list of paragraphs; text between ** and ** is set in bold.
 
-heading = "Working with AI"
+# The page itself is called “Working with AI”.
+heading = "AI prompts"
 
 intro = [
   "Copy the prompt for what you’re making, paste it into your AI assistant, then ask for what you need. The assistant then follows OCHA’s brand and house style, whether you’re starting fresh, halfway through, or fixing something already made.",

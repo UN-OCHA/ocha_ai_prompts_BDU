@@ -3,8 +3,8 @@
 Copy-paste prompts that make any AI assistant (Copilot, ChatGPT, Gemini, Claude…) work to OCHA’s
 brand and house style. One prompt per job: documents and slides; posters, flyers and reports;
 charts, infographics and maps; social media; video; writing. Colleagues copy them from the brand
-site, in the Visual Identity page’s “Working with AI” section:
-https://brand.unocha.org/document/281801#/overview/visual-identity
+site, on the “Working with AI” page:
+https://brand.unocha.org/document/281801#/overview/working-with-ai
 
 ## How it is built
 
@@ -43,7 +43,7 @@ runs `scripts/publish_frontify.py`, which writes each prompt into its copy butto
 through the Frontify API. The text is stored on the brand site itself, so the buttons keep working
 whatever happens to GitHub.
 
-- `frontify.json` lists the blocks for each page: `live` (Visual Identity, “Working with AI”) and
+- `frontify.json` lists the blocks for each page: `live` (the “Working with AI” page) and
   `test` (a hidden test page). The repository variable `FRONTIFY_TARGET` picks which one the Action
   updates.
 - The Action needs the repository secret `FRONTIFY_TOKEN`, a Frontify personal access token.
