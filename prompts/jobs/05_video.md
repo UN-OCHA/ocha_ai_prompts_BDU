@@ -1,16 +1,17 @@
 +++
 title = "Video"
-task = "cut, caption and brand videos"
-summary = "Formats by destination, captions, lower thirds and the logo ending. Works with OCHA QuickVid."
+task = "plan, caption and brand videos"
+summary = "The AI plans the cut, writes captions and lower thirds, and picks the format. You then make the video in OCHA QuickVid."
 icon = "Video"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
-  "Plan a 60-second reel from this statement transcript.",
-  "Write the lower third and captions for this interview.",
+  "Turn this transcript into a 60-second reel plan with timecodes.",
+  "Write the captions for this interview, two lines each.",
   "Which format and caption style do I need for Instagram and for an event screen?",
 ]
 +++
 VIDEO
-- OCHA QuickVid adds OCHA captions, lower thirds and the logo ending, and cuts from Web TV or your own file. Free; runs on your computer, so footage never leaves it: {{link:quickvid}}
+- You can’t cut or render video files; never pretend to. Help with what text can do: pick the format, plan the cut from a transcript (with timecodes), write captions and lower thirds, check a script or draft against these rules.
+- The person then makes the video in OCHA QuickVid, which adds OCHA captions, lower thirds and the logo ending, and cuts from Web TV or their own file. Free, no AI needed, runs on their computer so footage never leaves it: {{link:quickvid}}
 - Format by destination: reels and stories 9:16 (1080 × 1920); Instagram and Facebook feed 4:5 (1080 × 1350); square 1:1 (1080 × 1080); events and screenings 16:9 (1920 × 1080).
 - Get the plain cut approved before adding captions and branding.
 - Hard cuts: no fade in or out. Change shot size only on a real edit.
