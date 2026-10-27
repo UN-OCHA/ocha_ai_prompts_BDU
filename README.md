@@ -55,6 +55,9 @@ whatever happens to GitHub.
   which builds the new blocks and saves their ids in `frontify.json`; commit that file. For a removed
   job, delete its blocks on the brand site and its entry in `frontify.json`.
 - `--dry-run` shows what would change without writing anything.
+- **Hiding a job** without deleting it: add `hidden = true` to its file. The next publish removes it
+  from the page. To bring it back, set `hidden = false` and run `--create-missing` on a computer; it
+  returns in its place.
 
 ## Project Owner
 Javier Cueto, Head of the Brand and Design Unit, OCHA

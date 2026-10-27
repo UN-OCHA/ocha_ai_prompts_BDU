@@ -2,6 +2,9 @@
 title = "Video"
 task = "plan, caption and brand videos"
 summary = "The AI plans the cut, writes captions and lower thirds, and picks the format. OCHA QuickVid then trims and brands the video."
+# Hidden until QuickVid can import AI edit plans (multi-clip). Set to false, then run
+# publish_frontify.py --create-missing to put it back in its place.
+hidden = true
 icon = "Video"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
   "Turn this transcript into a 60-second reel plan with timecodes.",

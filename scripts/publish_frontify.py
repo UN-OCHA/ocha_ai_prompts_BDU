@@ -57,7 +57,7 @@ def _token() -> str:
     return tok
 
 
-def _call(method: str, path: str, body: dict | None = None, beta: bool = False) -> dict:
+def _call(method: str, path: str, body: dict | None = None, beta: bool = False, quiet_404: bool = False) -> dict:
     headers = {"Authorization": f"Bearer {_token()}", "Accept": "application/json"}
     data = None
     if body is not None:
@@ -70,6 +70,8 @@ def _call(method: str, path: str, body: dict | None = None, beta: bool = False) 
         with urllib.request.urlopen(req, timeout=60) as resp:
             return json.loads(resp.read() or b"{}")
     except urllib.error.HTTPError as e:
+        if quiet_404 and e.code == 404:
+            return {}
         # 401/403 means the token is wrong or expired: stop, never work around it.
         raise SystemExit(f"Frontify {method} {path} failed: HTTP {e.code} {e.read()[:300]!r}")
 
@@ -246,6 +248,24 @@ def create_missing(config: dict, target: dict, jobs: list[build.Job], prompts: d
         after = ids["prompt_block"]
 
 
+def remove_hidden(target: dict, jobs: list[build.Job], dry: bool, save) -> None:
+    """A job with hidden = true stays in the repo but comes off the page: its block and divider
+    are deleted and their ids dropped. Set hidden = false and run --create-missing to bring it back
+    in its place. Already-deleted blocks are fine, so this is safe to repeat."""
+    for job in jobs:
+        ids = target["jobs"].get(job.slug)
+        if not job.hidden or not ids:
+            continue
+        print(f"  {'would hide' if dry else 'hide    '} {job.slug}")
+        if dry:
+            continue
+        for key in ("prompt_block", "divider_block"):
+            if ids.get(key):
+                _call("DELETE", f"/api/document-block/{ids[key]}", quiet_404=True)
+        del target["jobs"][job.slug]
+        save()
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--target", required=True, help="a target in frontify.json: test or live")
@@ -259,11 +279,14 @@ def main() -> None:
     target = config["targets"][args.target]
     page = tomllib.loads(PAGE.read_text(encoding="utf-8"))
     prompts = build.build(write=False)
-    jobs = build.load_jobs()
+    all_jobs = build.load_jobs()
+    jobs = [j for j in all_jobs if not j.hidden]
     print(f"\nTarget: {args.target} (page {target['page_id']})")
 
     def save() -> None:  # after every creation, so a failure never leaves blocks nobody knows about
         CONFIG.write_text(json.dumps(config, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    remove_hidden(target, all_jobs, args.dry_run, save)
 
     if args.create_missing and not args.dry_run:
         create_missing(config, target, jobs, prompts, page, save)
@@ -273,7 +296,7 @@ def main() -> None:
     if missing or not target.get("intro_block"):
         raise SystemExit(f"frontify.json has no blocks on '{args.target}' for: {', '.join(missing) or 'the introduction'}. "
                          f"Run on a Mac: python3 scripts/publish_frontify.py --target {args.target} --create-missing")
-    gone = set(target["jobs"]) - {j.slug for j in jobs}
+    gone = set(target["jobs"]) - {j.slug for j in all_jobs}
     for slug in sorted(gone):
         print(f"  warning: '{slug}' is in frontify.json but has no job file. Delete its blocks on the page, "
               f"then remove it from frontify.json.")
