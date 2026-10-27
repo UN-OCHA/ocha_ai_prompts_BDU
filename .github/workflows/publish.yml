@@ -11,8 +11,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       # Fails when a prompt is too long, links outside the public allowlist, or has straight quotes.
@@ -31,8 +31,8 @@ jobs:
       # Which page in frontify.json to update. Set the repository variable FRONTIFY_TARGET to change it.
       TARGET: ${{ vars.FRONTIFY_TARGET || 'live' }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: No token yet
