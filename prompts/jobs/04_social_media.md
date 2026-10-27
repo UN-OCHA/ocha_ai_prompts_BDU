@@ -2,6 +2,7 @@
 title = "Social media"
 task = "make social media cards, carousels and their captions"
 summary = "Cards and carousels: fonts, photo and text placement, theme colours, logo, credits and alt text."
+icon = "Smartphone"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
   "Design a four-slide carousel from this approved text and these photos.",
   "Write the caption and alt text for this post.",

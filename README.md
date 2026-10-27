@@ -13,7 +13,7 @@ Each prompt is assembled from shared parts, so a rule is changed in one place:
 | File | What it holds |
 |---|---|
 | `prompts/core.md` | The common core in every prompt: how to respond, colours, text and layout, logo, icons, photos, numbers, names, accessibility, contacts |
-| `prompts/jobs/*.md` | One file per job: its title, the short text shown on the brand site, example requests, and the rules for that job |
+| `prompts/jobs/*.md` | One file per job: its title, the short text and Humanitarian Icon shown on the brand site (`icon`, the icon’s file name, e.g. `Water-source`), example requests, and the rules for that job |
 | `prompts/links.toml` | Every link, by name. The parts write `{{link:name}}` |
 | `dist/*.txt` | The finished prompts, written by the build. Don’t edit these by hand |
 | `scripts/build.py` | Assembles the prompts and checks them |
@@ -39,8 +39,9 @@ Small changes can also be made on github.com: edit the file, commit, and the Act
 ## How it reaches the brand site
 
 On every push to `main`, the GitHub Action `.github/workflows/publish.yml` checks the prompts and
-runs `scripts/publish_frontify.py`, which writes each prompt into its copy button on the brand site
-through the Frontify API. The text is stored on the brand site itself, so the buttons keep working
+runs `scripts/publish_frontify.py`, which writes each job into its block on the brand site through
+the Frontify API: one custom “AI prompt” block per job, showing the icon, title, description, two
+example requests and the copy button. The block’s code is in `../copy-prompt-block/` (BDU Dropbox). The text is stored on the brand site itself, so the buttons keep working
 whatever happens to GitHub.
 
 - `frontify.json` lists the blocks for each page: `live` (the “Working with AI” page) and

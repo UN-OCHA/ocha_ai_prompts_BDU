@@ -2,6 +2,7 @@
 title = "Charts, infographics and maps"
 task = "make charts, infographics, dashboards and maps"
 summary = "Which chart to use, chart and map styling, titles, sources and disclaimers. Works with the Humanitarian DataViz Tool."
+icon = "Chart"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
   "Which chart should I use for people in need by sector, 2024 to 2026?",
   "Prepare this table for the Humanitarian DataViz Tool as a bar chart.",

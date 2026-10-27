@@ -2,9 +2,9 @@
 """Publish the prompts to the brand site (brand.unocha.org, Frontify).
 
 Builds the prompts (scripts/build.py), then writes into the blocks listed in frontify.json:
-the section heading, the introduction, and for each job its text block (title, summary,
-examples) and its copy button (the custom "AI prompt" block). Only blocks whose content
-changed are written, and each write is read back to confirm it landed.
+the section heading, the introduction, and for each job one custom "AI prompt" block: its
+Humanitarian Icon, title, summary, example requests and copy button. Only blocks whose
+content changed are written, and each write is read back to confirm it landed.
 
     python3 scripts/publish_frontify.py --target test            # the hidden test page
     python3 scripts/publish_frontify.py --target live --dry-run  # show what would change
@@ -41,6 +41,7 @@ BASE = "https://brand.unocha.org"
 # Block type ids (public API) — the REST marketplace app ids are 2044620 and 3307325.
 TEXT_TYPE = "cl5wda7mi00010tw8zxxf6g0c"
 DIVIDER_TYPE = "cl5w9yz1l00010lw8dvragbie"
+ICONS = "https://raw.githubusercontent.com/UN-OCHA/humanitarian-icons-2026-BDU/main/svg"
 TEXT_LAYOUT = {"columnNumber": "1", "isColumnGutterCustom": False, "columnGutterSimple": "Auto"}
 # House convention: dashed dividers between subsections inside a section.
 DIVIDER = {"isLine": "Solid", "isWidthCustom": False, "widthSimple": "100%", "alignment": "Left",
@@ -137,17 +138,35 @@ def intro_settings(page: dict) -> dict:
     return {**TEXT_LAYOUT, "content": slate([{"type": "p", "children": rich(p)} for p in page["intro"]])}
 
 
-def job_text_settings(job: build.Job, page: dict) -> dict:
-    tries = " ".join(f"“{e}”" for e in job.examples[:2])
-    return {**TEXT_LAYOUT, "content": slate([
-        {"type": "heading3", "children": [{"text": job.title}]},
-        {"type": "p", "children": [{"text": job.summary}]},
-        {"type": "p", "children": [{"text": page["examples_label"] + " ", "bold": True}, {"text": tries}]},
-    ])}
+_icons: dict[str, str] = {}
+
+
+def icon_svg(name: str) -> str:
+    """The Humanitarian Icon's SVG, from its public repo. It is stored in the block, so the brand
+    site never loads it from GitHub; a wrong name stops the publish rather than showing no icon."""
+    if name not in _icons:
+        url = f"{ICONS}/{name}.svg"
+        try:
+            with urllib.request.urlopen(url, timeout=30) as resp:
+                svg = resp.read().decode("utf-8").strip()
+        except urllib.error.HTTPError as e:
+            raise SystemExit(f"Humanitarian Icon '{name}' not found ({url}: HTTP {e.code}). "
+                             f"Names are Hyphen-Case, e.g. Water-source.")
+        if "<svg" not in svg[:300]:
+            raise SystemExit(f"{url} is not an SVG")
+        _icons[name] = svg
+    return _icons[name]
 
 
 def prompt_settings(job: build.Job, prompt: str, page: dict) -> dict:
-    return {"buttonLabel": page["button_label"].format(title=job.title.lower()),
+    """One block per job: icon, title, summary, two example requests, and the copy button."""
+    return {"title": job.title,
+            "summary": job.summary,
+            "examplesLabel": page["examples_label"],
+            "examples": "\n".join(job.examples[:2]),
+            "iconName": job.icon or "",
+            "iconSvg": icon_svg(job.icon) if job.icon else "",
+            "buttonLabel": page["button_label"].format(title=job.title.lower()),
             "confirmationText": page["confirmation"],
             "promptText": prompt,
             "helperText": ""}
@@ -209,24 +228,22 @@ def create_missing(config: dict, target: dict, jobs: list[build.Job], prompts: d
                                              opaque(target["heading_id"], "guideline-page-heading"))
         print(f"  created  introduction {target['intro_block']}")
         save()
-    after = opaque(target["intro_block"], "guideline-page-block")
+    after = target["intro_block"]
     for i, job in enumerate(jobs):
         ids = target["jobs"].setdefault(job.slug, {})
         if not ids.get("prompt_block"):
             if i > 0 and not ids.get("divider_block"):
-                ids["divider_block"] = create_block(target["section_id"], DIVIDER_TYPE, DIVIDER, after)
-                after = opaque(ids["divider_block"], "guideline-page-block")
+                ids["divider_block"] = create_block(target["section_id"], DIVIDER_TYPE, DIVIDER,
+                                                    opaque(after, "guideline-page-block"))
                 save()
-            if not ids.get("text_block"):
-                ids["text_block"] = create_block(target["section_id"], TEXT_TYPE, job_text_settings(job, page), after)
-                save()
-            after = opaque(ids["text_block"], "guideline-page-block")
-            ids["prompt_block"] = copy_block(prompt_source(config), target["section_id"], ids["text_block"])
+            if ids.get("divider_block"):
+                after = ids["divider_block"]
+            ids["prompt_block"] = copy_block(prompt_source(config), target["section_id"], after)
             save()
             write_block(ids["prompt_block"], {**block_settings(ids["prompt_block"]),
                                               **prompt_settings(job, prompts[job.slug], page)})
-            print(f"  created  {job.slug}: text {ids['text_block']}, button {ids['prompt_block']}")
-        after = opaque(ids["prompt_block"], "guideline-page-block")
+            print(f"  created  {job.slug}: block {ids['prompt_block']}")
+        after = ids["prompt_block"]
 
 
 def main() -> None:
@@ -266,8 +283,7 @@ def main() -> None:
     sync(target["intro_block"], intro_settings(page), "introduction", args.dry_run)
     for job in jobs:
         ids = target["jobs"][job.slug]
-        sync(ids["text_block"], job_text_settings(job, page), f"{job.slug}: text", args.dry_run)
-        sync(ids["prompt_block"], prompt_settings(job, prompts[job.slug], page), f"{job.slug}: button", args.dry_run)
+        sync(ids["prompt_block"], prompt_settings(job, prompts[job.slug], page), job.slug, args.dry_run)
     print("Done.")
 
 

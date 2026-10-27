@@ -2,6 +2,7 @@
 title = "Writing"
 task = "write and edit text: reports, web pages, social posts, captions, emails and talking points"
 summary = "OCHA house style: spelling, capitals, acronyms, numbers, dates, quotes and plain language."
+icon = "Edit"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
   "Edit this paragraph to OCHA style and list what you changed.",
   "Shorten this update to 150 words in plain language.",

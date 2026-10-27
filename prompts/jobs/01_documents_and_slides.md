@@ -2,6 +2,7 @@
 title = "Documents and slides"
 task = "with Word documents and PowerPoint presentations"
 summary = "Word reports, briefing notes and PowerPoint decks: templates, colours, fonts, tables, simple charts and the logo."
+icon = "Report"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
   "Make this deck look OCHA.",
   "Turn these notes into a two-page briefing note in Word.",

@@ -2,6 +2,7 @@
 title = "Posters, flyers and reports"
 task = "design posters, flyers, roll-up banners, reports and other print or PDF layouts"
 summary = "Print and PDF layouts: grid, hierarchy, photos with credits, logo placement and co-branding."
+icon = "Print"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
   "Lay out an A3 poster for our cluster coordination workshop.",
   "Suggest a cover and inside-page layout for a 12-page annual report.",

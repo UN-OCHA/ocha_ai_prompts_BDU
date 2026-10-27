@@ -52,6 +52,7 @@ class Job:
     summary: str
     examples: list[str]
     rules: str
+    icon: str | None  # Humanitarian Icon file name, e.g. Water-source
     path: Path
 
 
@@ -70,7 +71,7 @@ def load_job(path: Path) -> Job:
         if key not in meta:
             raise SystemExit(f"{path.name}: front matter has no '{key}'")
     return Job(slug_of(path), meta["title"], meta["task"], meta["summary"],
-               list(meta["examples"]), m.group(2).strip(), path)
+               list(meta["examples"]), m.group(2).strip(), meta.get("icon"), path)
 
 
 def load_jobs() -> list[Job]:

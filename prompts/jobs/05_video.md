@@ -2,6 +2,7 @@
 title = "Video"
 task = "cut, caption and brand videos"
 summary = "Formats by destination, captions, lower thirds and the logo ending. Works with OCHA QuickVid."
+icon = "Video"  # Humanitarian Icon shown next to the title on the brand site
 examples = [
   "Plan a 60-second reel from this statement transcript.",
   "Write the lower third and captions for this interview.",
